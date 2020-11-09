@@ -43,7 +43,7 @@ class SceneWin(SceneBasic):
 		s.renderScreenObjects.append(s.icnRocket)
 
 	def EVENT_CLICK(s):
-		print "SceneWin Click"
+		print("SceneWin Click")
 		s.helperRaiseEvent(s.EVENT_FINISHED)
 
 	def EVENT_SCENE_START(s):
@@ -65,8 +65,7 @@ class SceneWin(SceneBasic):
 		move = (math.cos(20*s.time)*10,math.sin(20*s.time) *10)
 		s.icnRocket.pos = HelperVec2.add(s.posInit , (move) )
 		for e in s.icnParticleStars : e.drawUpdate(timeElapsed)
-		if(s.time > 10) :  
-			print "Next frame now"
+		if(s.time > 10) :
 			s.helperRaiseEvent(s.EVENT_FINISHED)
 		pass
 

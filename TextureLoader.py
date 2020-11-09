@@ -9,7 +9,7 @@ def helperRescale(img,scale):
 def load(osPath, scale =()):
 	idGenerated = str(osPath) + str(scale)
 	if( idGenerated in dicTextureIds) : 
-		print "TextureLoader DUPLICATED LOAD CALLS"
+		print("TextureLoader DUPLICATED LOAD CALLS")
 		return dicTextureIds[idGenerated]
 
 	global id,screenSize;

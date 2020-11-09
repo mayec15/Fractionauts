@@ -148,7 +148,7 @@ class Main(object):
 				self.clock.tick(60);
 				self.dicScenes[self.myState].renderUpdate(self.clock.get_time() * .001)
 		except :
-			print "CRITICAL ERROR : RESTARTING LOOP loopRender"
+			print("CRITICAL ERROR : RESTARTING LOOP loopRender")
 			self.loopRender()
 		self.isRunning = False
 
@@ -163,7 +163,7 @@ class Main(object):
 						return
 				self.dicScenes[self.myState].listenForEvents()
 		except :
-			print "CRITICAL ERROR : RESTARTING LOOP loopUpdate"
+			print("CRITICAL ERROR : RESTARTING LOOP loopUpdate")
 			self.loopUpdate()
 		self.isRunning = False
 

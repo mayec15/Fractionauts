@@ -199,12 +199,12 @@ class SceneGame(SceneBasic):
 			#self.loadNewQuestion(self.questionLevel, data[0],data[1],data[2])
 		except :
 			try :
-				print "Loading static level failed, turning into dynamic level"
+				print("Loading static level failed, turning into dynamic level")
 				self.questionMaker.makeNextQuestion(self.questionLevel)
 				self.loadNewQuestion( self.questionLevel, \
 					self.questionMaker.getChoices(), self.questionMaker.getAnswers() ,self.questionMaker.getAnswerNum()  )
 			except :
-				print  "Loading dynamic level failed, turning into emergency level"
+				print ("Loading dynamic level failed, turning into emergency level")
 			
 				try : 
 					data = self.helperLoadData( os.path.join('assets/levels','0.json'))
@@ -231,7 +231,7 @@ class SceneGame(SceneBasic):
 	
 
 	def loadNewQuestion(self,level,choices,answers,answerNum):
-		print "LOADING NEW QUESTION "
+		print("LOADING NEW QUESTION ")
 		self.questionChoices	= choices
 		self.questionAnswers	= answers
 
@@ -290,7 +290,7 @@ class SceneGame(SceneBasic):
 		else : 
 			SoundManager.ANSWER_WRONG()
 			self.icnTextBottom.display( self.helperRandomElement ( self.TEXT_WRONG_ANSWER))
-			print "GAME IS NOT YET OVER! DISPLAY SOME \"Lets try again GRAPHIC\" "  
+			print("GAME IS NOT YET OVER! DISPLAY SOME \"Lets try again GRAPHIC\" ")
 			self.questionReset()
 
 	def isGameOver(self):
@@ -304,7 +304,7 @@ class SceneGame(SceneBasic):
 		for i in range(0, len( self.arrIcnFuels )):
 			if(self.arrIcnFuels[i].isSelected):
 				sum += self.questionChoices[i][0] / float(self.questionChoices[i][1])
-		print "updating rocket "  + str(sum)
+		print("updating rocket "  + str(sum))
 		self.icnRocket.displayPercent(sum)
 
 		pass
@@ -328,7 +328,7 @@ class SceneGame(SceneBasic):
 
 	def EVENT_CLICK(self):
 		if(self.myState is self.STATE_NORMAL):
-			print "EVENT_CLICK"
+			print("EVENT_CLICK")
 			if(self.CLICK_ANSWER()) : 
 				self.doUpdateAnswer()
 			elif (self.CLICK_BUTTONS()):pass

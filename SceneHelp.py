@@ -47,7 +47,7 @@ class SceneHelp(SceneBasic):
 		pass
 
 	def EVENT_CLICK(self):
-		print "EVENT_CLICK"
+		print("EVENT_CLICK")
 		self.CLICK_BUTTONS()
 
 	def CLICK_BUTTON_MENU(self): self.helperRaiseEvent(self.EVENT_MENU)

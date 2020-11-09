@@ -61,8 +61,8 @@ class QuestionMaker:
 		
 		while(cont == False) :
 			# randomly leave fraction unreduced
-			print goalNumer
-			print goalDenom
+			print(goalNumer)
+			print(goalDenom)
 			
 			extra = random.randint(1,3)
 			
