@@ -38,6 +38,7 @@ class SceneGame(SceneBasic):
 	STATE_NORMAL = 0
 	STATE_SOLVED = 1
 
+
 	def __init__(self,screenSize):
 		SceneBasic.__init__(self,screenSize)
 
@@ -234,7 +235,7 @@ class SceneGame(SceneBasic):
 		print("LOADING NEW QUESTION ")
 		self.questionChoices	= choices
 		self.questionAnswers	= answers
-
+		self.award = 10
 		for i in range(0,3):
 			self.arrIcnFuels[i].setSelect(False)
 			self.arrIcnFuels[i].display(choices[i][0],choices[i][1])
@@ -286,8 +287,12 @@ class SceneGame(SceneBasic):
 			self.icnRocket.launch()
 			#Submitted answer is correct advnace to the next level and raise win event
 			self.questionLevel += 1
-			self.score += 10
+			self.score += self.award
 		else : 
+			if self.award != 1:
+				self.award -= 3
+			if self.score != 0:
+				self.score -= 1
 			SoundManager.ANSWER_WRONG()
 			self.icnTextBottom.display( self.helperRandomElement ( self.TEXT_WRONG_ANSWER))
 			print("GAME IS NOT YET OVER! DISPLAY SOME \"Lets try again GRAPHIC\" ")
@@ -313,6 +318,7 @@ class SceneGame(SceneBasic):
 		self.icnRocket.reset()
 		self.questionLevel = 0 
 		self.score = 0
+		self.award = 10
 		self.icnTextScore.setContent("Score 0")
 		self.icnTextLevel.setContent("Level 0")
 		pass
