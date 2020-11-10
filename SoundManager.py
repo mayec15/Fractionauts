@@ -21,14 +21,14 @@ def init():
 	Sound.bttnStart 	= helperLoadSound(Sound.bttnStart )
 	Sound.bttnExit	 	= helperLoadSound(Sound.bttnExit )
 	Sound.fuelUp 		= helperLoadSound(Sound.fuelUp )
-	Sound.fuelDown 	= helperLoadSound(Sound.fuelDown )
+	Sound.fuelDown 		= helperLoadSound(Sound.fuelDown )
 	Sound.fuelNo 		= helperLoadSound(Sound.fuelNo )
-	Sound.answerCorrect 	= helperLoadSound(Sound.answerCorrect )
+	Sound.answerCorrect	= helperLoadSound(Sound.answerCorrect )
 	Sound.answerWrong 	= helperLoadSound(Sound.answerWrong )
 	Sound.vibrateLow 	= helperLoadSound(Sound.vibrateLow )
 
 def EVENT_MUSIC_BACKGROUND(): 
-	Sound.background .play(-1) 
+	Sound.background.play(-1)
 	pass
 def BTTN_DEFAULT():Sound.bttnDefault .play()
 def BTTN_START():Sound.bttnStart .play()

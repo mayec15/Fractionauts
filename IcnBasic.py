@@ -34,7 +34,7 @@ class IcnBasic:
 		me.size = (w,h)
 		me.textureID = textureID
 		me.rect = (0,0,10,10);
-		me.mySurface = pygame.Surface((w,h),pygame.SRCALPHA) if textureID is -1 else TextureLoader.get(textureID)
+		me.mySurface = pygame.Surface((w,h),pygame.SRCALPHA) if textureID == -1 else TextureLoader.get(textureID)
 		if(isTextureRescaled ) : me.mySurface =HelperTexture.scale(me.mySurface, me.size)
 		
 	def setSelect(s,value):
@@ -59,8 +59,8 @@ class IcnBasic:
 		me.stateRender = me.STATE_RENDER_PAUSE_STATIC if me.isRenderStatic\
 					else me.STATE_RENDER_PAUSE_NORMAL  
 
-	def helperDraw(me, screen):
-		return screen.blit(me.mySurface,me.pos)
+	def helperDraw(self, screen):
+		return screen.blit(self.mySurface,self.pos)
 
 	def draw(me,screen):
 		if(me.stateRender is me.STATE_RENDER_ENABLED ):
