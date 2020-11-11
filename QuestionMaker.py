@@ -109,12 +109,17 @@ class QuestionMaker:
 	def makeNextQuestion(self, level):
 		#clear your answerSet and instantiate necessary temporary variables
 		self.init()
+		print("starting")
 		self.correctAnswerSet = self.randomizeOrder()
+		print("order chosen")
 		self.goalFractFraction = self.createGoal(level)
-		
+		print("goal set")
+
 		# to build self.mixedAnswers
 		correctAnswers = self.createCorrectAnswers(self.goalFractFraction)
+		print("correct answers chosen")
 		incorrectAnswer = self.createIncorrectAnswers(self.goalFractFraction, correctAnswers)
+		print("incorrect answer chosen")
 
 		#mix answers
 		#which correct answer appears first
