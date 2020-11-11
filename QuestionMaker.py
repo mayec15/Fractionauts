@@ -68,8 +68,10 @@ class QuestionMaker:
 		rngVal = []
 		for x in range(1, multiple_range - 1):
 			rngVal.append(x)
-		print("numenator magnitude set")
-		first_fract = first_fraction * rngVal[random.randint(0, len(rngVal) - 1)]
+		print("numenator magnitude choices made")
+		magnitude_select = random.choice(rngVal)
+		print("numerator magnitude chosen")
+		first_fract = first_fraction * magnitude_select
 		print("fraction magnitude applied")
 		second_fract = goal_Fract - first_fract
 
