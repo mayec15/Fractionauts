@@ -35,16 +35,16 @@ class QuestionMaker:
 	def createGoal(self, level):
 		if level < 5:
 			denom = random.randint(2, 5)
-			numer = random.randint(1, denom)
+			numer = random.randint(1, denom - 1)
 		elif level > 5 and level < 20:
 			denom = random.randint(2, level - 1)
 			if denom > 8:
-				numer = random.randint(denom // 2, level - 1)
+				numer = random.randint(denom // 2, denom - 1)
 			else:
-				numer = random.randint(2, level - 1)
+				numer = random.randint(2, denom - 1)
 		else:
 			denom = random.randint(10, 20)
-			numer = random.randint(denom // 2, level - 1)
+			numer = random.randint(denom // 2, denom - 1)
 		return [numer, denom]
 
 	'''

@@ -53,8 +53,8 @@ class SceneGame(SceneBasic):
 		self.questionChoices = []
 		self.questionAnswers = []
 
-		self.initIcnFuels(self.arrIcnFuels,screenSize);
-		self.initIcnRocket(screenSize);
+		self.initIcnFuels(self.arrIcnFuels,screenSize)
+		self.initIcnRocket(screenSize)
 		self.initImages(screenSize)
 		self.initIcnText(screenSize)
 		self.initButtons(screenSize)
