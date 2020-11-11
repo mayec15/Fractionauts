@@ -194,6 +194,7 @@ class SceneGame(SceneBasic):
 
 		self.levelWon = False
 		self.EVENT_SCENE_CHANGE_START()
+		'''
 		try:	
 			data = self.helperLoadData( os.path.join('assets/levels', str(self.questionLevel )+ '.json'))
 			self.loadNewQuestion(self.questionLevel,data[0],data[1],data[2])#data = self.helperLoadData(os.path.join('assets/levels',str(self.questionLevel)+ '.json'))
@@ -202,7 +203,7 @@ class SceneGame(SceneBasic):
 			try :
 				print("Loading static level failed, turning into dynamic level")
 				self.questionMaker.makeNextQuestion(self.questionLevel)
-				self.loadNewQuestion( self.questionLevel, \
+				self.loadNewQuestion( self.questionLevel,
 					self.questionMaker.getChoices(), self.questionMaker.getAnswers() ,self.questionMaker.getAnswerNum()  )
 			except :
 				print ("Loading dynamic level failed, turning into emergency level")
@@ -211,6 +212,10 @@ class SceneGame(SceneBasic):
 					data = self.helperLoadData( os.path.join('assets/levels','0.json'))
 					self.loadNewQuestion(self.questionLevel,data[0],data[1],data[2])
 				except : "SceneGame I failed. I cannot load anything. We are doomed!"
+		'''
+		self.questionMaker.makeNextQuestion(self.questionLevel)
+		self.loadNewQuestion( self.questionLevel,
+			self.questionMaker.getChoices(), self.questionMaker.getAnswers() ,self.questionMaker.getAnswerNum())
 		self.EVENT_SCENE_CHANGE_END()
 
 	def registerEvent_menu(s,e):s.EVENT_MENU.append(e)

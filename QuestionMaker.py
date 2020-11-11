@@ -6,11 +6,13 @@ import random
 class QuestionMaker:
 
 	def __init__(self):
-		self.init();
+		self.init()
 
 	def init(self):
 		self.numChoices = 3
+		#incorrectAnswers and correctAnswers scrambled
 		self.mixedAnswers = []
+		#only correct answers
 		self.correctAnswerSet = []
 		self.goalFractFraction = []
 
@@ -29,17 +31,130 @@ class QuestionMaker:
 	def getAnswerNum(self):
 		return self.goalFractFraction
 
+	# Returns a new goal based on givven level
+	def createGoal(self, level):
+		if level < 5:
+			denom = random.randint(2, 5)
+		elif level > 5 and level < 20:
+			denom = random.randint(2, level - 1)
+		else:
+			denom = random.randint(2, 20)
+		return [random.randint(1, denom), denom]
+
+	'''
+	goal = 6
+	possible denom = [2, 3, 6, 12, 18]
+
+	'''
+
+	def createCorrectAnswers(self, goal):
+		# generate list of denominators from 2..20 divisible by goal denominator
+		# goal[0] is numerator, goal[1] is denominator
+		# you must access these outside of goal_Fract as goal_Fract will reduce to lowest terms.
+		goal_denom = goal[1]
+		possible_denom = list()
+		goal_Fract = Fraction(goal[0], goal[1])
+		for x in range(2, 21):
+			if goal_denom % x == 0 or x % goal_denom == 0:
+				possible_denom.append(x)
+		
+		#select denom
+		first_denom = possible_denom[random.randint(0, len(possible_denom) - 1)]
+		#base of first_fract
+		first_fraction = Fraction(1, first_denom)
+
+		multiple_range = first_fraction // goal_Fract
+		rngVal = []
+		for x in range(1, multiple_range - 1):
+			rngVal.append(x)
+		
+		first_fract = first_fraction * rngVal[random.randint(0, len(rngVal) - 1)]
+
+		second_fract = goal_Fract - first_fract
+
+		first_correct = [first_fract.numerator, first_fract.denominator]
+		second_correct = [second_fract.numerator, second_fract.denominator]
+
+		return  [first_correct, second_correct]
+		
+	def createIncorrectAnswers(self, goal, correctAnswers):
+
+		goal_fract = Fraction(goal[0], goal[1])
+		correct_fracts = [Fraction(correctAnswers[0][0], correctAnswers[0][1])]
+		incorrect_fract = Fraction(0,0)
+
+		cont = True
+		while cont:
+			incorrect_denom = random.randint(2, goal[1])
+			incorrect_fract = Fraction(random.randint(1, goal[1]), incorrect_denom)
+
+			if incorrect_fract + correct_fracts[0] != goal_fract and incorrect_fract + correct_fracts[1] != goal_fract and incorrect_fract != goal_fract:
+				cont = False
+
+		return [incorrect_fract.numerator, incorrect_fract.denominator]
+
+	def randomizeOrder(self):
+		# Choose 2 correct, 1 incorrect
+
+		order = [random.choice([True, False])]
+		if not order[0]:
+			order.append(True)
+			order.append(True)
+		else:
+			order.append(random.choice([True,False]))
+			order.append(not order[1])
+		
+		return order
+
 	def makeNextQuestion(self, level):
 		#clear your answerSet and instantiate necessary temporary variables
 		self.init()
-		self.correctAnswerSet = []
-		correctAnswers = []
-		incorrectAnswers = []
-		numCorrect = self.genNumCorrect(level)
+		self.correctAnswerSet = self.randomizeOrder()
+		self.goalFractFraction = self.createGoal(level)
+		
+		# to build self.mixedAnswers
+		correctAnswers = self.createCorrectAnswers(self.goalFractFraction)
+		incorrectAnswer = self.createIncorrectAnswers(self.goalFractFraction, correctAnswers)
+
+		#mix answers
+		#which correct answer appears first
+		correctOrder = random.randint(0,1)
+
+		# if  is True, choice is a correct answer
+		if self.correctAnswerSet[0]:
+			self.mixedAnswers.append(correctAnswers[correctOrder])
+			if correctOrder == 0:
+				correctOrder = 1
+			else:
+				correctOrder = 0
+		else:
+			self.mixedAnswers.append(incorrectAnswer)
+		
+		if self.correctAnswerSet[1]:
+			self.mixedAnswers.append(correctAnswers[correctOrder])
+			if correctOrder == 0:
+				correctOrder = 1
+			else:
+				correctOrder = 0
+		else:
+			self.mixedAnswers.append(incorrectAnswer)
+		
+		if self.correctAnswerSet[2]:
+			self.mixedAnswers.append(correctAnswers[correctOrder])
+		else:
+			self.mixedAnswers.append(incorrectAnswer)
+
+		
+
+
+		'''numCorrect = self.genNumCorrect(level)
 		numIncorrect = self.numChoices - numCorrect
 		remainingInCorrect = numCorrect
 		levelDenom = 0
+		'''
+
 		
+		'''
 		#generate non-zero goal numerator and denominator
 		if(level <= 6): levelDenom = 8
 		else:
@@ -358,3 +473,4 @@ class QuestionMaker:
 			#incorrectAnswers.append(fraction)
 
 		#print incorrectAnswers
+		'''
