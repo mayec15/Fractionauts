@@ -3,6 +3,7 @@ import threading
 # Fractionauts Main Class
 import pygame
 import os
+import string
 import json
 # from gi.repository import Gtk
 
@@ -19,7 +20,6 @@ import SoundManager
 import TextureLoader
 import DrawHelper
 from SceneBasic import SceneBasic
-
 
 class Main(object):
     STATE_MENU = 0
@@ -139,34 +139,57 @@ class Main(object):
             self.isRenderFirstFrame = False
         scene.render(self.screen)
 
+    # def loopRender(self):
+    #     try:
+    #         while self.isRunning:
+    #             self.lockRender.acquire()
+    #             self.helperRenderScene(self.dicScenes[self.myState])
+    #
+    #             # self.displayFPS(self.myFont)
+    #             self.lockRender.release()
+    #             self.clock.tick(60)
+    #             self.dicScenes[self.myState].renderUpdate(self.clock.get_time() * .001)
+    #     except:
+    #         print("CRITICAL ERROR : RESTARTING LOOP loopRender")
+    #         self.loopRender()
+    #     self.isRunning = False
+    #
+    # def loopUpdate(self):
+    #     try:
+    #         while self.isRunning:
+    #             eventStack = pygame.event.get()
+    #             for event in eventStack:
+    #                 if event.type == pygame.QUIT:
+    #                     self.EVENTHDR_QUIT()
+    #                     return
+    #             self.dicScenes[self.myState].listenForEvents()
+    #     except:
+    #         print("CRITICAL ERROR : RESTARTING LOOP loopUpdate")
+    #         self.loopUpdate()
+    #     self.isRunning = False
     def loopRender(self):
-        try:
-            while self.isRunning:
-                self.lockRender.acquire()
-                self.helperRenderScene(self.dicScenes[self.myState])
 
-                # self.displayFPS(self.myFont)
-                self.lockRender.release()
-                self.clock.tick(60)
-                self.dicScenes[self.myState].renderUpdate(self.clock.get_time() * .001)
-        except:
-            print("CRITICAL ERROR : RESTARTING LOOP loopRender")
-            self.loopRender()
+        while self.isRunning:
+            self.lockRender.acquire()
+            self.helperRenderScene(self.dicScenes[self.myState])
+
+            # self.displayFPS(self.myFont)
+            self.lockRender.release()
+            self.clock.tick(60)
+            self.dicScenes[self.myState].renderUpdate(self.clock.get_time() * .001)
+
         self.isRunning = False
 
     def loopUpdate(self):
-        try:
-            while self.isRunning:
-                eventStack = pygame.event.get()
-                for event in eventStack:
-                    if event.type == pygame.QUIT:
-                        self.EVENTHDR_QUIT()
-                        return
-                self.dicScenes[self.myState].listenForEvents()
-        except:
-            print("CRITICAL ERROR : RESTARTING LOOP loopUpdate")
-            self.loopUpdate()
+        while self.isRunning:
+            eventStack = pygame.event.get()
+            for event in eventStack:
+                if event.type == pygame.QUIT:
+                    self.EVENTHDR_QUIT()
+                    return
+            self.dicScenes[self.myState].listenForEvents()
         self.isRunning = False
+
 
     def changeState(self, stateNew):
         self.dicScenes[stateNew].EVENT_SCENE_START()

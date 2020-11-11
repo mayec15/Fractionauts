@@ -1,6 +1,6 @@
 from decimal import Decimal
 from fractions import Fraction
-import random
+import random, sys
 
 
 class QuestionMaker:
@@ -31,7 +31,7 @@ class QuestionMaker:
 	def getAnswerNum(self):
 		return self.goalFractFraction
 
-	# Returns a new goal based on givven level
+	# Returns a new goal based on given level
 	def createGoal(self, level):
 		if level < 5:
 			denom = random.randint(2, 5)
@@ -76,8 +76,12 @@ class QuestionMaker:
 
 
 		multi_max = goal_Fract // first_fraction
+		print("MULTIMAX IS: " + str(multi_max))
 		print(multi_max)
 		multi_range = [x for x in range(1, multi_max)]
+		if(len(multi_range) == 0):
+			multi_range = [1]
+		print("MULTIRANGE IS: " + str(multi_range))
 		print("numenator magnitude choices made")
 		magnitude_select = random.choice(multi_range)
 		print("numerator magnitude chosen")
@@ -107,15 +111,15 @@ class QuestionMaker:
 	def createIncorrectAnswers(self, goal, correctAnswers):
 
 		goal_fract = Fraction(goal[0], goal[1])
-		correct_fracts = [Fraction(correctAnswers[0][0], correctAnswers[0][1])]
-		incorrect_fract = Fraction(0,0)
+		correct_fracts = [Fraction(correctAnswers[0][0], correctAnswers[0][1]), Fraction(correctAnswers[1][0], correctAnswers[1][1])]
+		incorrect_fract = Fraction(0,1)
 
 		print("entering incorrect answers verification loop")
 		cont = True
 		while cont:
 			incorrect_denom = random.randint(2, goal[1])
 			incorrect_fract = Fraction(random.randint(1, goal[1]), incorrect_denom)
-			print("testing conflict with " + incorrect_fract + " to " + correct_fracts[0] + ", " + correct_fracts[1] + " for goal " + goal_fract)
+			print("testing conflict with " + str(incorrect_fract) + " to " + str(correct_fracts[0]) + ", " + str(correct_fracts[1]) + " for goal " + str(goal_fract))
 			if incorrect_fract + correct_fracts[0] != goal_fract and incorrect_fract + correct_fracts[1] != goal_fract and incorrect_fract != goal_fract:
 				cont = False
 
