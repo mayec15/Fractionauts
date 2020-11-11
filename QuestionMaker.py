@@ -76,8 +76,12 @@ class QuestionMaker:
 
 
 		multi_max = goal_Fract // first_fraction
+		print("MULTIMAX IS: " + str(multi_max))
 		print(multi_max)
 		multi_range = [x for x in range(1, multi_max)]
+		if(len(multi_range) == 0):
+			multi_range = [1]
+		print("MULTIRANGE IS: " + str(multi_range))
 		print("numenator magnitude choices made")
 		magnitude_select = random.choice(multi_range)
 		print("numerator magnitude chosen")

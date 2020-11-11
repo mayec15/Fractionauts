@@ -3,6 +3,7 @@ import threading
 # Fractionauts Main Class
 import pygame
 import os
+import string
 import json
 # from gi.repository import Gtk
 
@@ -19,7 +20,6 @@ import SoundManager
 import TextureLoader
 import DrawHelper
 from SceneBasic import SceneBasic
-
 
 class Main(object):
     STATE_MENU = 0
