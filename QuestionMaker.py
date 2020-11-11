@@ -58,23 +58,26 @@ class QuestionMaker:
 			if goal_denom % x == 0 or x % goal_denom == 0:
 				possible_denom.append(x)
 		
+		print("possible denominators defined")
 		#select denom
 		first_denom = possible_denom[random.randint(0, len(possible_denom) - 1)]
 		#base of first_fract
 		first_fraction = Fraction(1, first_denom)
-
+		print("first denominator set")
 		multiple_range = first_fraction // goal_Fract
 		rngVal = []
 		for x in range(1, multiple_range - 1):
 			rngVal.append(x)
-		
+		print("numenator magnitude set")
 		first_fract = first_fraction * rngVal[random.randint(0, len(rngVal) - 1)]
-
+		print("fraction magnitude applied")
 		second_fract = goal_Fract - first_fract
+
+		print("second fraction set")
 
 		first_correct = [first_fract.numerator, first_fract.denominator]
 		second_correct = [second_fract.numerator, second_fract.denominator]
-
+		print("fractions converted to lists")
 		return  [first_correct, second_correct]
 		
 	def createIncorrectAnswers(self, goal, correctAnswers):
@@ -83,11 +86,12 @@ class QuestionMaker:
 		correct_fracts = [Fraction(correctAnswers[0][0], correctAnswers[0][1])]
 		incorrect_fract = Fraction(0,0)
 
+		print("entering incorrect answers verification loop")
 		cont = True
 		while cont:
 			incorrect_denom = random.randint(2, goal[1])
 			incorrect_fract = Fraction(random.randint(1, goal[1]), incorrect_denom)
-
+			print("testing conflict with " + incorrect_fract + " to " + correct_fracts[0] + ", " + correct_fracts[1] + " for goal " + goal_fract)
 			if incorrect_fract + correct_fracts[0] != goal_fract and incorrect_fract + correct_fracts[1] != goal_fract and incorrect_fract != goal_fract:
 				cont = False
 
@@ -103,23 +107,23 @@ class QuestionMaker:
 		else:
 			order.append(random.choice([True,False]))
 			order.append(not order[1])
-		
+		print(order)
 		return order
 
 	def makeNextQuestion(self, level):
 		#clear your answerSet and instantiate necessary temporary variables
 		self.init()
-		print("starting")
+		print("STARTING")
 		self.correctAnswerSet = self.randomizeOrder()
-		print("order chosen")
+		print("ORDER CHOSEN")
 		self.goalFractFraction = self.createGoal(level)
-		print("goal set")
+		print("GOAL SET")
 
 		# to build self.mixedAnswers
 		correctAnswers = self.createCorrectAnswers(self.goalFractFraction)
-		print("correct answers chosen")
+		print("CORRECT ANSWERS CHOSEN")
 		incorrectAnswer = self.createIncorrectAnswers(self.goalFractFraction, correctAnswers)
-		print("incorrect answer chosen")
+		print("INCORRECT ANSWERS CHOSEN")
 
 		#mix answers
 		#which correct answer appears first
