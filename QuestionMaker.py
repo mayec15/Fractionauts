@@ -41,7 +41,7 @@ class QuestionMaker:
 			if denom > 8:
 				numer = random.randint(denom // 2, denom - 1)
 			else:
-				numer = random.randint(2, denom - 1)
+				numer = random.randint(1, denom - 1)
 		else:
 			denom = random.randint(10, 20)
 			numer = random.randint(denom // 2, denom - 1)
@@ -53,7 +53,7 @@ class QuestionMaker:
 
 	'''
 
-	def createCorrectAnswers(self, goal):
+	def createCorrectAnswers(self, goal, level):
 		# generate list of denominators from 2..20 divisible by goal denominator
 		# goal[0] is numerator, goal[1] is denominator
 		# you must access these outside of goal_Fract as goal_Fract will reduce to lowest terms.
@@ -61,7 +61,7 @@ class QuestionMaker:
 		possible_denom = list()
 		goal_Fract = Fraction(goal[0], goal[1])
 		print("goal Fract: " + str(goal_Fract))
-		for x in range(2, 21):
+		for x in range(2, level // 5 + 6):
 			if goal_denom % x == 0 or x % goal_denom == 0:
 				possible_denom.append(x)
 
@@ -94,6 +94,9 @@ class QuestionMaker:
 		first_correct = [first_fract.numerator, first_fract.denominator]
 		second_correct = [second_fract.numerator, second_fract.denominator]
 
+
+
+
 		# un-reduce fractions
 		firstModify = random.randint(1, 20 // first_correct[1])
 		secondModify = random.randint(1, 20 // second_correct[1])
@@ -107,6 +110,18 @@ class QuestionMaker:
 		print("Goal: " + str(goal_Fract))
 		print("corrects" + str([first_correct, second_correct]))
 		return [first_correct, second_correct]
+
+	def getBadBoi(self, goal):
+		while True:
+			incorrect_denom = random.randint(2, goal[1] + 3)
+			incorrect_fract = Fraction(random.randint(1, goal[1]), incorrect_denom)
+			print("Comparing " + str(incorrect_fract) + " to " + str(Fraction(goal[0], goal[1])))
+			if incorrect_fract < 1 and incorrect_fract != Fraction(goal[0], goal[1]):
+				break
+
+		return incorrect_fract
+
+
 		
 	def createIncorrectAnswers(self, goal, correctAnswers):
 
@@ -114,14 +129,22 @@ class QuestionMaker:
 		correct_fracts = [Fraction(correctAnswers[0][0], correctAnswers[0][1]), Fraction(correctAnswers[1][0], correctAnswers[1][1])]
 		incorrect_fract = Fraction(0,1)
 
+		print("goal_fract")
+		print(goal_fract)
+
 		print("entering incorrect answers verification loop")
 		cont = True
 		while cont:
-			incorrect_denom = random.randint(2, goal[1])
-			incorrect_fract = Fraction(random.randint(1, goal[1]), incorrect_denom)
+			incorrect_fract = self.getBadBoi(goal)
 			print("testing conflict with " + str(incorrect_fract) + " to " + str(correct_fracts[0]) + ", " + str(correct_fracts[1]) + " for goal " + str(goal_fract))
 			if incorrect_fract + correct_fracts[0] != goal_fract and incorrect_fract + correct_fracts[1] != goal_fract and incorrect_fract != goal_fract:
 				cont = False
+			else:
+				self.getBadBoi(goal)
+
+		print(incorrect_fract.numerator, incorrect_fract.denominator)
+		#TODO: make incorrect answer be similar to correct answers. Right now it sticks out like a sore thumb
+
 
 		return [incorrect_fract.numerator, incorrect_fract.denominator]
 
@@ -148,7 +171,7 @@ class QuestionMaker:
 		print("GOAL SET")
 
 		# to build self.mixedAnswers
-		correctAnswers = self.createCorrectAnswers(self.goalFractFraction)
+		correctAnswers = self.createCorrectAnswers(self.goalFractFraction, level)
 		print("CORRECT ANSWERS CHOSEN")
 		incorrectAnswer = self.createIncorrectAnswers(self.goalFractFraction, correctAnswers)
 		print("INCORRECT ANSWERS CHOSEN")
