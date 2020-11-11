@@ -35,11 +35,17 @@ class QuestionMaker:
 	def createGoal(self, level):
 		if level < 5:
 			denom = random.randint(2, 5)
+			numer = random.randint(1, denom)
 		elif level > 5 and level < 20:
 			denom = random.randint(2, level - 1)
+			if denom > 8:
+				numer = random.randint(denom // 2, level - 1)
+			else:
+				numer = random.randint(2, level - 1)
 		else:
-			denom = random.randint(2, 20)
-		return [random.randint(1, denom), denom]
+			denom = random.randint(10, 20)
+			numer = random.randint(denom // 2, level - 1)
+		return [numer, denom]
 
 	'''
 	goal = 6
@@ -54,22 +60,26 @@ class QuestionMaker:
 		goal_denom = goal[1]
 		possible_denom = list()
 		goal_Fract = Fraction(goal[0], goal[1])
+		print("goal Fract: " + str(goal_Fract))
 		for x in range(2, 21):
 			if goal_denom % x == 0 or x % goal_denom == 0:
 				possible_denom.append(x)
-		
+
 		print("possible denominators defined")
+		print(possible_denom)
 		#select denom
 		first_denom = possible_denom[random.randint(0, len(possible_denom) - 1)]
 		#base of first_fract
 		first_fraction = Fraction(1, first_denom)
+		print("first fraction base" + str(first_fraction))
 		print("first denominator set")
-		multiple_range = first_fraction // goal_Fract
-		rngVal = []
-		for x in range(1, multiple_range - 1):
-			rngVal.append(x)
+
+
+		multi_max = goal_Fract // first_fraction
+		print(multi_max)
+		multi_range = [x for x in range(1, multi_max)]
 		print("numenator magnitude choices made")
-		magnitude_select = random.choice(rngVal)
+		magnitude_select = random.choice(multi_range)
 		print("numerator magnitude chosen")
 		first_fract = first_fraction * magnitude_select
 		print("fraction magnitude applied")
@@ -79,8 +89,20 @@ class QuestionMaker:
 
 		first_correct = [first_fract.numerator, first_fract.denominator]
 		second_correct = [second_fract.numerator, second_fract.denominator]
+
+		# un-reduce fractions
+		firstModify = random.randint(1, 20 // first_correct[1])
+		secondModify = random.randint(1, 20 // second_correct[1])
+
+		first_correct[0] *= firstModify
+		first_correct[1] *= firstModify
+		second_correct[0] *= secondModify
+		second_correct[1] *= secondModify
+
 		print("fractions converted to lists")
-		return  [first_correct, second_correct]
+		print("Goal: " + str(goal_Fract))
+		print("corrects" + str([first_correct, second_correct]))
+		return [first_correct, second_correct]
 		
 	def createIncorrectAnswers(self, goal, correctAnswers):
 
