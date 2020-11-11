@@ -188,7 +188,7 @@ class SceneGame(SceneBasic):
 
 	#Load the level-th JSON file in the levels folder
 	def initLevel(self, level = -1):
-		if(level is -1 ) : level = self.questionLevel
+		if(level == -1 ) : level = self.questionLevel
 
 
 
@@ -263,6 +263,11 @@ class SceneGame(SceneBasic):
 	TEXT_WRONG_ANSWER = ["Let's try again, friend!","Woo ha! That was not the right amount of fuel. Let's try again","That was not the right amount of fuel rocket needs.","That's not the right amount of fuel rocket needs.","Hey buddy! Let's try again. I know you can do this."]
 
 	def helperIsSameArray(self, arrA, arrB):
+
+		print(arrA)
+		print(arrB)
+
+
 		if(len(arrA) is not len(arrB)): return False
 		for i in range(0, len(arrA)):
 			if( arrA[i] is not arrB[i]) :return False
@@ -305,10 +310,14 @@ class SceneGame(SceneBasic):
 
 	def isGameOver(self):
 		answerState = []
-		for icn in self.arrIcnFuels:answerState.append(icn.isSelected)
-		for a  in self.questionAnswers:
-			if(self.helperIsSameArray(answerState, a) ) :return True
+		for icn in self.arrIcnFuels:
+			answerState.append(icn.isSelected)
+
+		if self.helperIsSameArray(answerState, self.questionAnswers):
+			return True
+
 		return False
+
 	def doUpdateAnswer(self):
 		sum = 0
 		for i in range(0, len( self.arrIcnFuels )):
