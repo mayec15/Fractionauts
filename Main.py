@@ -217,3 +217,18 @@ if __name__ == '__main__':
 # self.width = pygame.display.Info().current_w
 # self.hcenter = self.width / 2
 # self.vcenter = self.height / 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

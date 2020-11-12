@@ -61,7 +61,7 @@ class QuestionMaker:
 		possible_denom = list()
 		goal_Fract = Fraction(goal[0], goal[1])
 		print("goal Fract: " + str(goal_Fract))
-		for x in range(2, level // 5 + 6):
+		for x in range(2, 21):
 			if goal_denom % x == 0 or x % goal_denom == 0:
 				possible_denom.append(x)
 
